@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome CSS (for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style type="text/css">
+    body {
+      background-color: #121212; /* Dark background color */
+      color: #fff; /* Text color */
+    }
+
+    .chat-container {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .user-chat {
+      width: 40%;
+      border: 1px solid #444; /* Dark border color */
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #1f1f1f; /* Darker background color */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    }
+
+    .chat-window {
+      height: 250px;
+      overflow-y: scroll;
+      border: 1px solid #444; /* Dark border color */
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #282828; /* Dark background color */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    }
+
+    .chat-window p {
+      margin-bottom: 5px;
+    }
+
+    .form-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form-container input {
+      flex: 1;
+    }
+
+    .form-container button {
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container mt-5 chat-container">
+    <div class="user-chat">
+      <h2>You</h2>
+      <div class="chat-window" id="user1-chat-window"></div>
+      <form class="form-container" id="user1-form">
+        <input type="text" class="form-control" id="user1-message" placeholder="Type your message" required>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</button>
+      </form>
+    </div>
+
+    <div class="user-chat">
+      <h2>User</h2>
+      <div class="chat-window" id="user2-chat-window"></div>
+      <form class="form-container" id="user2-form">
+        <input type="text" class="form-control" id="user2-message" placeholder="Type your message" required>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (Optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const user1Form = document.getElementById("user1-form");
+    const user2Form = document.getElementById("user2-form");
+    const user1ChatWindow = document.getElementById("user1-chat-window");
+    const user2ChatWindow = document.getElementById("user2-chat-window");
+
+    function sendMessage(form, senderWindow, recipientWindow) {
+      event.preventDefault();
+      const message = form.querySelector("input").value;
+      form.querySelector("input").value = ""; // Clear input field
+      senderWindow.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+      recipientWindow.innerHTML += `<p><strong>User:</strong> ${message}</p>`;
+    }
+
+    user1Form.addEventListener("submit", (event) => {
+      sendMessage(user1Form, user1ChatWindow, user2ChatWindow);
+    });
+
+    user2Form.addEventListener("submit", (event) => {
+      sendMessage(user2Form, user2ChatWindow, user1ChatWindow);
+    });
+  </script>
+</body>
+</html>
